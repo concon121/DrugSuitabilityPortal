@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="template-main" template="/WEB-INF/jsp/templates/main.jsp">
+		<put-attribute name="title" value="NHS Drug Suitability Portal" />
+		<put-attribute name="header" value="/WEB-INF/jsp/templates/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/jsp/templates/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/templates/footer.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="errorPage" template="/WEB-INF/jsp/templates/error.jsp">
+		<put-attribute name="title" value="NHS Drug Suitability Portal" />
+		<put-attribute name="header" value="/WEB-INF/jsp/templates/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/jsp/templates/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/templates/footer.jsp" />
+		<put-attribute name="errorCode" value="" />
+		<put-attribute name="errorTitle" value="" />
+		<put-attribute name="errorMessage" value="" />
+	</definition>
+
+	<definition name="home" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/index.jsp" />
+	</definition>
+
+	<definition name="profile" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/profile.jsp" />
+	</definition>
+
+	<definition name="login" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/login.jsp" />
+	</definition>
+
+	<definition name="newUserForm" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/newUserForm.jsp" />
+	</definition>
+
+	<definition name="viewUserDetails" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/viewUserDetails.jsp" />
+	</definition>
+
+	<definition name="updatePatientDetails" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/updatePatientDetails.jsp" />
+	</definition>
+
+	<definition name="updateUserDetails" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/updateUserDetails.jsp" />
+	</definition>
+
+	<definition name="updatePassword" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/updatePassword.jsp" />
+	</definition>
+
+	<definition name="accountSettings" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/accountSettings.jsp" />
+	</definition>
+
+	<definition name="newDrug" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/newDrug.jsp" />
+	</definition>
+
+	<definition name="newEffect" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/newEffect.jsp" />
+	</definition>
+
+	<definition name="newIncident" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/newIncident.jsp" />
+	</definition>
+
+	<definition name="viewIncidents" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/viewIncidents.jsp" />
+	</definition>
+	
+		<definition name="viewEffect" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/viewEffect.jsp" />
+	</definition>
+
+	<definition name="viewPastAssessments" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/viewPastAssessments.jsp" />
+	</definition>
+
+	<definition name="viewPastDiagnosis" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/viewPastDiagnosis.jsp" />
+	</definition>
+
+	<definition name="indexData" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/indexData.jsp" />
+	</definition>
+
+	<definition name="search" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/search.jsp" />
+	</definition>
+
+	<definition name="searchResults" extends="template-main">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/pages/searchResults.jsp" />
+	</definition>
+
+	<definition name="viewUser" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/viewUser.jsp" />
+	</definition>
+
+	<definition name="viewDrug" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/viewDrug.jsp" />
+	</definition>
+
+	<definition name="viewIllness" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/viewIllness.jsp" />
+	</definition>
+
+	<definition name="diagnosis" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/diagnosis.jsp" />
+	</definition>
+
+	<definition name="assessment" extends="template-main">
+		<put-attribute name="body" value="/WEB-INF/jsp/pages/assessment.jsp" />
+	</definition>
+
+	<definition name="accessDenied" extends="errorPage">
+		<put-attribute name="errorCode" value="403" />
+		<put-attribute name="errorTitle" value="Access Denied" />
+		<put-attribute name="errorMessage"
+			value="You dont have the permissions to access the page you requested, sorry!" />
+	</definition>
+
+	<definition name="pageNotFound" extends="errorPage">
+		<put-attribute name="errorCode" value="404" />
+		<put-attribute name="errorTitle" value="Page not found" />
+		<put-attribute name="errorMessage"
+			value="There is no page at the requested address, please go back and try again." />
+	</definition>
+
+	<definition name="unknownError" extends="errorPage">
+		<put-attribute name="errorCode" value="999" />
+		<put-attribute name="errorTitle" value="Unknown Error" />
+		<put-attribute name="errorMessage"
+			value="Something went terribly wrong, please go back and try again.  If the problem persists, please contact us." />
+	</definition>
+
+</tiles-definitions>

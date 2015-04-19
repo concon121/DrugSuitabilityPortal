@@ -1,0 +1,76 @@
+body {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.nhsTitle {
+	vertical-align:bottom;
+	color:#FE9A2E;
+	font-family:Verdana;
+}
+
+#menu {
+	text-align:center;
+}
+
+#inlineLogin{
+	text-align:right;
+}
+
+#inlineUserOptions {
+	text-align:right;
+}
+
+.menuItem {
+	color:#FFFFFF;
+	background-color:#0066CC;
+	font-family:Verdana;
+	border-style:solid;
+	border-width:1px;
+	border-color:#FFFFFF;
+	border-radius: 5px;
+	line-height:30px;
+}
+
+.bordered {
+	margin-top:10px;
+	border-style: solid;
+    border-width: medium;
+    border-color: #D8D8D8;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.menuRow {
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.drop {
+	min-height:34px;
+}
+
+.result {
+	border-width: 0px 0px 1px 0px;
+	border-color: #D8D8D8;
+	border-style: solid;
+	margin-bottom: 20px;
+	height: 70px;
+}
+
+.resultHeading {
+	padding-right: 20px;
+}
+
+
+.sub-heading-entity {
+	color: grey;
+}
+
+.patientInfo {
+	padding-bottom: 20px;
+}
+
+#cssValidation{
+	line-height: 64px;
+}
