@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dao" class="uk.co.cbray.msc.nhsdsp.dao.DataAccessObject" />
+	<bean id="userRepo" class="uk.co.cbray.msc.nhsdsp.dao.UserRepository" />
+	<bean id="patientDetailsRepo" class="uk.co.cbray.msc.nhsdsp.dao.PatientDetailsRepository" />
+	<bean id="patientAllergyRepo" class="uk.co.cbray.msc.nhsdsp.dao.PatientAllergyRepository" />
+	<bean id="illnessRepo" class="uk.co.cbray.msc.nhsdsp.dao.IllnessRepository" />
+	<bean id="drugRepo" class="uk.co.cbray.msc.nhsdsp.dao.DrugRepository" />
+	<bean id="diagnosisRepo" class="uk.co.cbray.msc.nhsdsp.dao.DiagnosisRepository" />
+	<bean id="assessmentRepo" class="uk.co.cbray.msc.nhsdsp.dao.AssessmentRepository" />
+	<bean id="effectRepo" class="uk.co.cbray.msc.nhsdsp.dao.EffectRepository" />
+	<bean id="incidentRepo" class="uk.co.cbray.msc.nhsdsp.dao.IncidentRepository" />
+	
+</beans>
