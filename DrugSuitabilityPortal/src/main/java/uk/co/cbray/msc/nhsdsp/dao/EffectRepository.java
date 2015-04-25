@@ -6,7 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Effect;
-
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for Effects and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class EffectRepository {
 
 	@Autowired

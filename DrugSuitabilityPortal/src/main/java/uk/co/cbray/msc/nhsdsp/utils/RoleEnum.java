@@ -1,5 +1,10 @@
 package uk.co.cbray.msc.nhsdsp.utils;
 
+/**
+ * Enum to identify role.
+ * 
+ * @author Connor Bray
+ */
 public enum RoleEnum {
 	
 	ROLE_PATIENT("PATIENT", 0),

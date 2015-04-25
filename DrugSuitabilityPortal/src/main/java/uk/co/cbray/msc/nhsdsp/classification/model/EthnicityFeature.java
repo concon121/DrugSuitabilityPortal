@@ -6,11 +6,17 @@ import org.slf4j.LoggerFactory;
 import uk.co.cbray.msc.ml4j.exceptions.InvalidArgumentException;
 import uk.co.cbray.msc.ml4j.model.LiteralFeatureImpl;
 
+/**
+ * A feature used in the classification of an Incident. The EthnicityFeature
+ * describes the patients ethnicity.
+ * 
+ * @author Connor Bray
+ */
 public class EthnicityFeature extends LiteralFeatureImpl {
-	
+
 	private static final Logger LOG = LoggerFactory
 			.getLogger(EthnicityFeature.class);
-	
+
 	public EthnicityFeature(String ethnicity) {
 		try {
 			setValue(ethnicity);
@@ -23,5 +29,5 @@ public class EthnicityFeature extends LiteralFeatureImpl {
 	public String getFeatureName() {
 		return "ethnicity";
 	}
-	
+
 }

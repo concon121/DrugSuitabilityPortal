@@ -15,33 +15,48 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import uk.co.cbray.msc.nhsdsp.dao.DataAccessObject;
-import uk.co.cbray.msc.nhsdsp.entity.Role;
 import uk.co.cbray.msc.nhsdsp.entity.UserLogin;
 
+/**
+ * The UserDetailsService Spring Security will use to retrieve the user details
+ * from the database.
+ * 
+ * @author Connor Bray
+ */
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private DataAccessObject dao;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(CustomUserDetailsService.class);
-	
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(CustomUserDetailsService.class);
+
+	/**
+	 * Given a username, this method will search the database and retrieve the
+	 * appropriate UserLogin (if one exists). This will then be converted into
+	 * the SpringSecuity UserDetails object.
+	 */
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		List<UserLogin> results = getDao().executeJpqlQueryWithParameters("from UserLogin u where u.username = ?", UserLogin.class, username);
+		List<UserLogin> results = getDao().executeJpqlQueryWithParameters(
+				"from UserLogin u where u.username = ?", UserLogin.class,
+				username);
 		if (results != null && results.size() > 0) {
 			UserLogin userLogin = (UserLogin) results.get(0);
 			List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-			
+
 			String role = userLogin.getUser().getRoleName();
 			GrantedAuthority auth = new SimpleGrantedAuthority(role);
 			auths.add(auth);
 			LOG.debug("User has authority: " + auth.getAuthority());
-			
-			UserDetails details = new User(userLogin.getUsername(), userLogin.getPassword(), true, true, true, true, auths);
+
+			UserDetails details = new User(userLogin.getUsername(),
+					userLogin.getPassword(), true, true, true, true, auths);
 			return details;
 		} else {
 			LOG.error("Invalid access attempt, no results found for user.");
-			return new User(username,"INVALID",false,false,false,false,Collections.<GrantedAuthority> emptyList());
+			return new User(username, "INVALID", false, false, false, false,
+					Collections.<GrantedAuthority> emptyList());
 		}
 	}
 
@@ -53,5 +68,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 		this.dao = dao;
 	}
 
-	
 }

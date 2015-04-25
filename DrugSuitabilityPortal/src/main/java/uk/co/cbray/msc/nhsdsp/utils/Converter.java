@@ -39,6 +39,11 @@ import uk.co.cbray.msc.nhsdsp.forms.PatientDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 
+/**
+ * Helper class for converting objects from one state into another.
+ * 
+ * @author Connor Bray
+ */
 public class Converter {
 
 	public static User convert(UserForm form) {
@@ -62,12 +67,13 @@ public class Converter {
 	}
 
 	public static <T extends IForm> T convert(User user, Class<T> clazz)
-			throws InvalidEntityConversionTypeException, InstantiationException, IllegalAccessException {
+			throws InvalidEntityConversionTypeException,
+			InstantiationException, IllegalAccessException {
 
-			T form = clazz.newInstance();
-			form.copyFrom(user);
+		T form = clazz.newInstance();
+		form.copyFrom(user);
 
-			return form;
+		return form;
 
 	}
 
@@ -237,8 +243,8 @@ public class Converter {
 				drugAllergies.add(drugAllergy);
 			}
 		}
-		
-		String [] formEffects = form.getEffectsAsArray();
+
+		String[] formEffects = form.getEffectsAsArray();
 
 		drug.setDrugAllergies(drugAllergies);
 
@@ -335,7 +341,7 @@ public class Converter {
 
 		if (illnesses != null | !illnesses.isEmpty()) {
 			Illness i = illnesses.get(0);
-			d.setIllness(((BigDecimal)i.getId()).intValue());
+			d.setIllness(((BigDecimal) i.getId()).intValue());
 		}
 
 		return d;
@@ -351,7 +357,7 @@ public class Converter {
 			form.setUserId(d.getUser());
 			Illness i = dao.findById(new BigDecimal(d.getIllness()));
 			form.setIllnessName(i.getName());
-			
+
 			formItems.add(form);
 		}
 
@@ -361,11 +367,12 @@ public class Converter {
 
 	/**
 	 * Convert a collection of entity to a collection of illness names.
+	 * 
 	 * @param entities
 	 * @return
 	 */
 	public static List<String> convertIllnessToNames(List<Illness> illnesses) {
-		
+
 		List<String> names = new ArrayList<String>();
 
 		for (Illness i : illnesses) {
@@ -375,17 +382,18 @@ public class Converter {
 		return names;
 	}
 
-	public static List<String> convertDiagnosisToIllnessNames(List<Diagnosis> diagnoses, IllnessRepository repo) {
+	public static List<String> convertDiagnosisToIllnessNames(
+			List<Diagnosis> diagnoses, IllnessRepository repo) {
 
 		List<String> names = new ArrayList<String>();
 		List<BigDecimal> illnessIds = new ArrayList<BigDecimal>();
-		
+
 		for (Diagnosis d : diagnoses) {
 			illnessIds.add(new BigDecimal(d.getIllness()));
 		}
-		
+
 		List<Illness> illnesses = repo.findAllInCollection(illnessIds);
-		
+
 		for (Illness i : illnesses) {
 			names.add(i.getName());
 		}
@@ -396,40 +404,41 @@ public class Converter {
 	public static DrugUserSuitability convert(User user, Drug drug,
 			String classifier, Double percent, EffectRepository repo) {
 		DrugUserSuitability suit = new DrugUserSuitability();
-		
+
 		Effect effect = repo.findByName(classifier);
-		
+
 		suit.setDrug(drug);
 		suit.setUser(user);
-		suit.setIncompatibility(new BigDecimal((int)(percent * 100)));
+		suit.setIncompatibility(new BigDecimal((int) (percent * 100)));
 		suit.setEffect(effect);
-		
+
 		return suit;
 	}
 
 	public static Effect convert(NewEffectForm form) {
 		Effect effect = new Effect();
-		
+
 		effect.setName(form.getName());
 		effect.setDescription(form.getDescription());
-		
+
 		return effect;
 	}
 
-	public static Set<DrugEffect> convert(Drug drug, String[] effectsAsArray, EffectRepository effectRepo) {
+	public static Set<DrugEffect> convert(Drug drug, String[] effectsAsArray,
+			EffectRepository effectRepo) {
 		Set<DrugEffect> effects = new HashSet<DrugEffect>();
-		
-		for(String name : effectsAsArray) {
+
+		for (String name : effectsAsArray) {
 			Effect effect = effectRepo.findByName(name);
-			
+
 			DrugEffect de = new DrugEffect();
-			
+
 			de.setDrugId(drug.getId().intValue());
 			de.setEffectid(effect.getId().intValue());
-			
+
 			effects.add(de);
 		}
-		
+
 		return effects;
 	}
 

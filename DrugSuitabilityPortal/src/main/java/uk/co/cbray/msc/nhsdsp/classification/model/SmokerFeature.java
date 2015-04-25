@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import uk.co.cbray.msc.ml4j.exceptions.InvalidArgumentException;
 import uk.co.cbray.msc.ml4j.model.BinaryFeatureImpl;
 
+/**
+ * A feature used in the classification of an Incident. The SmokerFeature describes
+ * whether the patient smokes or not.
+ * 
+ * @author Connor Bray
+ */
 public class SmokerFeature extends BinaryFeatureImpl {
 
 	private static final Logger LOG = LoggerFactory

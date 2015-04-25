@@ -6,7 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Drug;
 import uk.co.cbray.msc.nhsdsp.entity.Incident;
-
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for Incidents and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class IncidentRepository {
 
 	@Autowired

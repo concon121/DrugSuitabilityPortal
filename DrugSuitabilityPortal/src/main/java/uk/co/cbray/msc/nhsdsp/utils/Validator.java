@@ -21,6 +21,12 @@ import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
 
+/**
+ * Encapsulates the logic for validating various different types of objects and
+ * entities.
+ * 
+ * @author Connor Bray
+ */
 public class Validator {
 
 	public static List<String> validate(UserForm user, UserRepository dao) {
@@ -170,13 +176,12 @@ public class Validator {
 			errorMessages.add(ErrorMessageEnum.NO_RESULTS.getMessage());
 			model.addAttribute("error", errorMessages);
 		}
-		
+
 		if (errorMessages.isEmpty()) {
-			return false;	
+			return false;
 		} else {
 			return true;
 		}
-		
 
 	}
 
@@ -207,8 +212,8 @@ public class Validator {
 		return errorMessages;
 	}
 
-	public static <E extends IEntity, F extends IForm>  List<String> validate(List<E> entityList,
-			List<F> formItems) {
+	public static <E extends IEntity, F extends IForm> List<String> validate(
+			List<E> entityList, List<F> formItems) {
 		List<String> errorMessages = new ArrayList<String>();
 
 		if (entityList.isEmpty()) {

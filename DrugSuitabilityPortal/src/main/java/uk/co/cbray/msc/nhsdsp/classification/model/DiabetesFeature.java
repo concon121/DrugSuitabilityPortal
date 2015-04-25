@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import uk.co.cbray.msc.ml4j.exceptions.InvalidArgumentException;
 import uk.co.cbray.msc.ml4j.model.BinaryFeatureImpl;
 
+/**
+ * A feature used in the classification of an Incident. The DiabetesFeature describes
+ * whether the patient has diabetes.
+ * 
+ * @author Connor Bray
+ */
 public class DiabetesFeature extends BinaryFeatureImpl {
 
 	private static final Logger LOG = LoggerFactory

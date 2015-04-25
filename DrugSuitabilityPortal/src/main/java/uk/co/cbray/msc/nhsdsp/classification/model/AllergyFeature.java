@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import uk.co.cbray.msc.ml4j.exceptions.InvalidArgumentException;
 import uk.co.cbray.msc.ml4j.model.LiteralFeatureImpl;
 
+/**
+ * A feature used in the classification of an Incident. The AllergyFeature describes
+ * one of the patients allergies.
+ * 
+ * @author Connor Bray
+ */
 public class AllergyFeature extends LiteralFeatureImpl {
 	
 private static final Logger LOG = LoggerFactory.getLogger(AgeFeature.class);

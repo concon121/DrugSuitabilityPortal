@@ -21,6 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.co.cbray.msc.nhsdsp.entity.IEntity;
 import uk.co.cbray.msc.nhsdsp.entity.Searchable;
 
+/**
+ * Generic DAO capable of providing all of the persistence functionality
+ * required by the application.
+ * 
+ * @author Connor Bray
+ */
 public class DataAccessObject {
 
 	private static final Logger LOG = LoggerFactory
@@ -127,7 +133,7 @@ public class DataAccessObject {
 			} else {
 				jpqlQuery.setParameter(currentParam, parameter);
 			}
-			
+
 			currentParam++;
 		}
 

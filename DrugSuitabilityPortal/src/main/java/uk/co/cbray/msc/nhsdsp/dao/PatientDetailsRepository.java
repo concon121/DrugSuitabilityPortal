@@ -11,7 +11,12 @@ import uk.co.cbray.msc.nhsdsp.entity.PatientDetail;
 import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.forms.PatientDetailForm;
 import uk.co.cbray.msc.nhsdsp.utils.AllergyHelper;
-
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for PatientDetails and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class PatientDetailsRepository {
 
 	@Autowired

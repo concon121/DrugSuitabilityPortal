@@ -26,6 +26,13 @@ import uk.co.cbray.msc.nhsdsp.utils.RoleEnum;
 import uk.co.cbray.msc.nhsdsp.utils.RoleHelper;
 import uk.co.cbray.msc.nhsdsp.utils.SecurityContextHelper;
 
+/**
+ * Intercepts a request to make information about the user available in the
+ * model and session.
+ * 
+ * @author Connor Bray
+ *
+ */
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
 	private static final String ANONYMOUS = "anonymousUser";
@@ -42,6 +49,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 	}
 
+	/**
+	 * Handles the request after the Controller is finished. Puts the username,
+	 * role and profile of the current logged in user into the model to be made
+	 * available to the view.
+	 */
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler, ModelAndView model)
 			throws Exception {
@@ -50,23 +62,27 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 		if (!name.equalsIgnoreCase(ANONYMOUS)) {
 
-			RoleEnum role = RoleHelper.getBaseRole(SecurityContextHelper.getAuthorities());
-			
-			List<UserLogin> userLogins = getUserRepo().getUserLoginsForUsername(name);
+			RoleEnum role = RoleHelper.getBaseRole(SecurityContextHelper
+					.getAuthorities());
+
+			List<UserLogin> userLogins = getUserRepo()
+					.getUserLoginsForUsername(name);
 			UserLogin userLogin = userLogins.get(0);
 
 			User user = userLogin.getUser();
-			
+
 			model.getModel().put("username", name);
 			model.getModel().put("userRole", role.getName());
-			if(user != null) {
-				UserDetailForm form = Converter.convert(user, UserDetailForm.class);
+			if (user != null) {
+				UserDetailForm form = Converter.convert(user,
+						UserDetailForm.class);
 				model.getModel().put("userProfile", form);
 			}
 			PatientDetail details = getPatientDetails(user);
 			List<PatientAllergy> allergies = getPatientAllergy(user);
 			if (details != null) {
-				PatientDetailForm patientDetails = Converter.convert(details, allergies);
+				PatientDetailForm patientDetails = Converter.convert(details,
+						allergies);
 				model.getModel().put("patientDetails", patientDetails);
 			}
 
@@ -76,8 +92,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 	private PatientDetail getPatientDetails(User user) {
 
-		List<PatientDetail> details = getPatientDetailsRepo().findPatientDetailsForUser(user);
-		
+		List<PatientDetail> details = getPatientDetailsRepo()
+				.findPatientDetailsForUser(user);
+
 		if (details == null || details.size() == 0) {
 			return null;
 		} else {
@@ -87,17 +104,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	}
 
 	private List<PatientAllergy> getPatientAllergy(User user) {
-		List<PatientAllergy> alergies = getPatientAllergyRepo().findPatientAllergysForUser(user);
+		List<PatientAllergy> alergies = getPatientAllergyRepo()
+				.findPatientAllergysForUser(user);
 		return alergies;
 	}
 
+	/**
+	 * Handles the request before it gets sent to the Controller. Makes the
+	 * UserID of the current logged in user available in the session.
+	 */
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		
+
 		String name = SecurityContextHelper.getUsername();
 
 		if (!name.equalsIgnoreCase(ANONYMOUS)) {
-			List<UserLogin> userLogins = getUserRepo().getUserLoginsForUsername(name);
+			List<UserLogin> userLogins = getUserRepo()
+					.getUserLoginsForUsername(name);
 			UserLogin userLogin = userLogins.get(0);
 			int userId = userLogin.getUser().getId().intValue();
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder
@@ -105,7 +128,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			HttpSession session = attr.getRequest().getSession();
 			session.setAttribute("userId", userId);
 		}
-		
+
 		return true;
 	}
 
@@ -121,7 +144,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		return patientAllergyRepo;
 	}
 
-	public void setPatientAllergyRepo(PatientAllergyRepository patientAllergyRepo) {
+	public void setPatientAllergyRepo(
+			PatientAllergyRepository patientAllergyRepo) {
 		this.patientAllergyRepo = patientAllergyRepo;
 	}
 
@@ -129,8 +153,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		return patientDetailsRepo;
 	}
 
-	public void setPatientDetailsRepo(PatientDetailsRepository patientDetailsRepo) {
+	public void setPatientDetailsRepo(
+			PatientDetailsRepository patientDetailsRepo) {
 		this.patientDetailsRepo = patientDetailsRepo;
 	}
-	
+
 }

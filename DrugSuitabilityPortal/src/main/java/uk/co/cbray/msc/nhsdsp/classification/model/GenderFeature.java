@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import uk.co.cbray.msc.ml4j.exceptions.InvalidArgumentException;
 import uk.co.cbray.msc.ml4j.model.LiteralFeatureImpl;
 
+/**
+ * A feature used in the classification of an Incident. The GenderFeature
+ * describes the patients gender.
+ * 
+ * @author Connor Bray
+ */
 public class GenderFeature extends LiteralFeatureImpl {
 
 	private static final Logger LOG = LoggerFactory

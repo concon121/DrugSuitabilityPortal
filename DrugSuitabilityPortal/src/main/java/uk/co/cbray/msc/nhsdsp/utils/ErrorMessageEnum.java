@@ -1,5 +1,10 @@
 package uk.co.cbray.msc.nhsdsp.utils;
 
+/**
+ * Enum for storing various error messages used by the Util classes.
+ * 
+ * @author Connor Bray
+ */
 public enum ErrorMessageEnum {
 
 	INVALID_EMAIL("Please enter a valid email address."),
@@ -24,6 +29,5 @@ public enum ErrorMessageEnum {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
 	
 }

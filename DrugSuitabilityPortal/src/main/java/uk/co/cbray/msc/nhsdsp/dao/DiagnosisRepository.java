@@ -7,26 +7,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Diagnosis;
 
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for Diagnosis and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class DiagnosisRepository {
-	
+
 	@Autowired
 	private DataAccessObject dao;
 
 	public void create(Diagnosis entity) {
 		getDao().create(entity);
 	}
-	
+
 	public void update(Diagnosis entity) {
 		getDao().update(entity, Diagnosis.class);
 	}
-	
+
 	public List<Diagnosis> findByUserId(BigDecimal userId) {
 		String jpql = "from Diagnosis d where d.userId = ?";
-		List<Diagnosis> results = getDao().executeJpqlQueryWithParameters(
-				jpql, Diagnosis.class, userId);
+		List<Diagnosis> results = getDao().executeJpqlQueryWithParameters(jpql,
+				Diagnosis.class, userId);
 		return results;
 	}
-	
+
 	public DataAccessObject getDao() {
 		return dao;
 	}
@@ -34,8 +40,5 @@ public class DiagnosisRepository {
 	public void setDao(DataAccessObject dao) {
 		this.dao = dao;
 	}
-
-	
-	
 
 }

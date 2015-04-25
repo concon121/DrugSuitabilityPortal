@@ -13,15 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.cbray.msc.nhsdsp.entity.DrugUserSuitability;
 
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for Assessments and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class AssessmentRepository {
 	@Autowired
 	private DataAccessObject dao;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(AssessmentRepository.class);
-	
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(AssessmentRepository.class);
+
 	public List<DrugUserSuitability> findByUserId(BigDecimal userId) {
 		String jpql = "from DrugUserSuitability s where s.user.id = ?";
-		List<DrugUserSuitability> assessments = getDao().executeJpqlQueryWithParameters(jpql, DrugUserSuitability.class, userId);
+		List<DrugUserSuitability> assessments = getDao()
+				.executeJpqlQueryWithParameters(jpql,
+						DrugUserSuitability.class, userId);
 		return assessments;
 	}
 
@@ -33,7 +42,7 @@ public class AssessmentRepository {
 		this.dao = dao;
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void createAll(List<DrugUserSuitability> suits) {
 		LOG.debug("Create all DrugUserSuitabilities started: " + suits.size());
 		Set<DrugUserSuitability> suitsSet = new HashSet<DrugUserSuitability>();
@@ -41,6 +50,5 @@ public class AssessmentRepository {
 		getDao().createAll(suitsSet);
 		LOG.debug("Create all DrugUserSuitabilities ended.");
 	}
-	
-	
+
 }

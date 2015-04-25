@@ -2,7 +2,11 @@ package uk.co.cbray.msc.nhsdsp.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Enum to identify gender.
+ * 
+ * @author Connor Bray
+ */
 public enum GenderEnum {
 	
 	MALE("MALE"),

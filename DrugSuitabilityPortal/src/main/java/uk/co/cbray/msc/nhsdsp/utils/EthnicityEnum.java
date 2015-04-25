@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Based on 2011 Brittish Census
- * @author connor
- *
+ * Enum to identify ethnicity.
+ * Based on 2011 Brittish Census.
+ * 
+ * @author Connor Bray
  */
 public enum EthnicityEnum {
 

@@ -19,11 +19,31 @@ import uk.co.cbray.msc.nhsdsp.entity.Searchable;
 import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 
+/**
+ * Helper class for all search related functions.
+ * 
+ * @author Connor Bray
+ */
 public class SearchHelper {
 
 	public static final Logger LOG = LoggerFactory
 			.getLogger(SearchHelper.class);
 
+	/**
+	 * Searches for entities based on the search term and adds the result set to
+	 * the model.
+	 * 
+	 * @param dao
+	 *            The DataAccessObject.
+	 * @param form
+	 *            The SearchForm.
+	 * @param model
+	 *            The Model.
+	 * @param clazz
+	 *            The class to search for.
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public static <T extends IEntity & Searchable> void search(
 			DataAccessObject dao, SearchForm form, Model model, Class<T> clazz)
 			throws InstantiationException, IllegalAccessException {
@@ -31,7 +51,7 @@ public class SearchHelper {
 		List<T> results = Collections.EMPTY_LIST;
 		results = dao.search(clazz, form.getSearchString());
 		LOG.debug("User Results found in search: " + results.size());
-		
+
 		for (T t : results) {
 			if (t instanceof User) {
 				User u = (User) t;
@@ -92,6 +112,19 @@ public class SearchHelper {
 
 	}
 
+	/**
+	 * Searches for Users by the search term, then filters out all the
+	 * non-PATIENTS.
+	 * 
+	 * @param dao
+	 *            The DataAccessObject.
+	 * @param form
+	 *            The SearchForm.
+	 * @param model
+	 *            The Model.
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public static <T extends IEntity & Searchable> void searchPatientsOnly(
 			DataAccessObject dao, SearchForm form, Model model)
 			throws InstantiationException, IllegalAccessException {

@@ -19,6 +19,12 @@ import uk.co.cbray.msc.nhsdsp.entity.Illness;
 import uk.co.cbray.msc.nhsdsp.forms.NewDrugForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
 
+/**
+ * An implementation of the Facade design pattern, this class encapsulates
+ * persistence logic for Drugs and provides a simple and readable api.
+ * 
+ * @author Connor Bray
+ */
 public class DrugRepository {
 
 	@Autowired
