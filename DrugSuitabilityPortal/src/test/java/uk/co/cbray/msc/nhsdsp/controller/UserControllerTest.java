@@ -27,10 +27,11 @@ import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 import uk.co.cbray.msc.nhsdsp.test.utils.TestFactory;
+import uk.co.cbray.msc.nhsdsp.utils.RoleHelper;
 import uk.co.cbray.msc.nhsdsp.utils.SecurityContextHelper;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(SecurityContextHelper.class)
+@PrepareForTest(value={SecurityContextHelper.class, RoleHelper.class})
 public class UserControllerTest {
 
 	@Mock
@@ -107,4 +108,5 @@ public class UserControllerTest {
 		verify(userRepo).update((User)anyObject());
 		
 	}
+	
 }
