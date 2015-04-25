@@ -8,8 +8,8 @@
 	<bean id="config" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:/properties/application.properties</value>
-				<value>classpath:/properties/persistence.properties</value>
+				<value>file:${catalina.home}/conf/nhsdsp/application.properties</value>
+				<value>file:${catalina.home}/conf/nhsdsp/persistence.properties</value>
 			</list>
 		</property>
 	</bean>
