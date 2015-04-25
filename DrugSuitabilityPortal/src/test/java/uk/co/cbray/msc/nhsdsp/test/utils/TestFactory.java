@@ -8,6 +8,7 @@ import java.util.List;
 import uk.co.cbray.msc.nhsdsp.entity.Diagnosis;
 import uk.co.cbray.msc.nhsdsp.entity.Drug;
 import uk.co.cbray.msc.nhsdsp.entity.DrugIllness;
+import uk.co.cbray.msc.nhsdsp.entity.DrugUserSuitability;
 import uk.co.cbray.msc.nhsdsp.entity.Effect;
 import uk.co.cbray.msc.nhsdsp.entity.Illness;
 import uk.co.cbray.msc.nhsdsp.entity.Incident;
@@ -70,6 +71,7 @@ public class TestFactory {
 
 		drug.setDescription("Test description");
 		drug.setName("test name");
+		
 
 		return drug;
 	}
@@ -200,7 +202,7 @@ public class TestFactory {
 		return list;
 	}
 
-	private static Effect getEffectInstance() {
+	public static Effect getEffectInstance() {
 		Effect e = new Effect();
 		
 		e.setId(new BigDecimal(1));
@@ -221,4 +223,36 @@ public class TestFactory {
 		return i;
 	}
 
+	public static List<Incident> getIncidentListInstance(int size) {
+		List<Incident> incidents = new ArrayList<Incident>();
+		for (int i = 0; i<size; i++) {
+			incidents.add(getIncidentInstance());
+		}
+		return incidents;
+	}
+
+	
+	
+	public static List<DrugUserSuitability> getDrugUserSuitabilityList(int size) {
+		List<DrugUserSuitability> list = new ArrayList<DrugUserSuitability>();
+		
+		for (int i = 0; i<size; i++) {
+			list.add(getDrugUserSuitabilityInstance());
+		}
+		
+		return list;
+	}
+
+	public static DrugUserSuitability getDrugUserSuitabilityInstance() {
+		DrugUserSuitability d = new DrugUserSuitability();
+		
+		d.setId(new BigDecimal(1));
+		d.setEffect(getEffectInstance());
+		d.setDrug(getDrugInstance());
+		d.setUser(getUserInstance());
+		d.setIncompatibility(new BigDecimal(20));
+		
+		return d;
+	}
+	
 }
