@@ -37,8 +37,9 @@ public class DrugController {
 	private EffectRepository effectRepo;
 	@Autowired
 	private DataAccessObject dao;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(DrugController.class);
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DrugController.class);
 
 	@ModelAttribute(value = "form")
 	public NewDrugForm getNewDrugForm() {
@@ -49,13 +50,13 @@ public class DrugController {
 	public String newDrug() {
 		return "newDrug";
 	}
-	
+
 	@ModelAttribute("searchForm")
 	public SearchForm getSearchForm() {
 		LOG.debug("Instantiated new SearchForm");
 		return new SearchForm();
 	}
-	
+
 	@ModelAttribute("viewEffect")
 	public ViewEffect getViewEffectForm() {
 		return new ViewEffect();
@@ -88,23 +89,30 @@ public class DrugController {
 
 		return "viewDrug";
 	}
-	
+
 	@RequestMapping(value = "/effect/search", method = RequestMethod.POST)
 	public String searchUsers(SearchForm form, Model model) {
 
-		try {
+		List<String> errorMessages = Validator.validate(form);
 
-			SearchHelper.search(getDao(), form, model, Effect.class);
+		if (errorMessages.isEmpty()) {
 
-		} catch (InstantiationException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (IllegalAccessException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (Exception e) {
-			LOG.error("Unknown exception occurred while searching.", e);
-			return "unknownError";
+			try {
+
+				SearchHelper.search(getDao(), form, model, Effect.class);
+
+			} catch (InstantiationException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (IllegalAccessException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (Exception e) {
+				LOG.error("Unknown exception occurred while searching.", e);
+				return "unknownError";
+			}
+		} else {
+			model.addAttribute("error", errorMessages);
 		}
 
 		return "newDrug";
@@ -133,7 +141,5 @@ public class DrugController {
 	public void setDao(DataAccessObject dao) {
 		this.dao = dao;
 	}
-	
-	
 
 }

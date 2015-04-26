@@ -11,6 +11,20 @@
 		</div>
 	</c:if>
 </div>
+<div id="errorMessages">
+	<c:if test="${not empty error}">
+		<c:forEach items="${error}" var="err">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Warning! </strong>
+				<c:out value="${err}"></c:out>
+			</div>
+		</c:forEach>
+	</c:if>
+</div>
 
 <form role="form" class="form-horizontal" name="loginForm" method="POST" action="/NHSDrugSuitabilityPortal/j_spring_security_check">
 	<div class="form-group">

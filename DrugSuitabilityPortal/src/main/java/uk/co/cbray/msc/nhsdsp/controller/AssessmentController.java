@@ -85,19 +85,26 @@ public class AssessmentController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchUsers(SearchForm form, Model model) {
 
-		try {
+		List<String> errorMessages = Validator.validate(form);
 
-			SearchHelper.searchPatientsOnly(getDao(), form, model);
+		if (errorMessages.isEmpty()) {
 
-		} catch (InstantiationException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (IllegalAccessException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (Exception e) {
-			LOG.error("Unknown exception occurred while searching.", e);
-			return "unknownError";
+			try {
+
+				SearchHelper.searchPatientsOnly(getDao(), form, model);
+
+			} catch (InstantiationException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (IllegalAccessException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (Exception e) {
+				LOG.error("Unknown exception occurred while searching.", e);
+				return "unknownError";
+			}
+		} else {
+			model.addAttribute("error", errorMessages);
 		}
 
 		return "assessment";
@@ -192,8 +199,9 @@ public class AssessmentController {
 
 			List<AssessmentForm> formItems = Converter.convert(assessments,
 					AssessmentForm.class);
-			
-			List<String> errorMessages = Validator.validate(assessments, formItems);
+
+			List<String> errorMessages = Validator.validate(assessments,
+					formItems);
 			if (errorMessages.isEmpty()) {
 				model.addAttribute("items", formItems);
 			} else {

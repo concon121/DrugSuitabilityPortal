@@ -17,6 +17,7 @@ import uk.co.cbray.msc.nhsdsp.forms.NewDrugForm;
 import uk.co.cbray.msc.nhsdsp.forms.NewEffectForm;
 import uk.co.cbray.msc.nhsdsp.forms.NewPasswordForm;
 import uk.co.cbray.msc.nhsdsp.forms.PatientDetailForm;
+import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
@@ -123,7 +124,9 @@ public class Validator {
 	public static List<String> validate(NewDrugForm form, EffectRepository repo) {
 
 		List<String> errorMessages = new ArrayList<String>();
-		if (form.getName() == null || form.getDescription() == null) {
+		if (form.getName() == null || form.getDescription() == null
+				|| form.getName().trim().equals("")
+				|| form.getDescription().trim().equals("")) {
 			errorMessages.add(ErrorMessageEnum.INCOMPLETE_FORM.getMessage());
 		}
 
@@ -240,6 +243,20 @@ public class Validator {
 			errorMessages.add(ErrorMessageEnum.INCOMPLETE_FORM.getMessage());
 		}
 
+		return errorMessages;
+	}
+
+	public static List<String> validate(SearchForm form) {
+		
+		List<String> errorMessages = new ArrayList<String>();
+
+		if (form.getSearchString() == null || 
+			form.getSearchString().trim().equals("") || 
+			form.getEntity() == null ||
+			form.getEntity().trim().equals("")) {
+			errorMessages.add(ErrorMessageEnum.NO_RESULTS.getMessage());
+		}
+		
 		return errorMessages;
 	}
 

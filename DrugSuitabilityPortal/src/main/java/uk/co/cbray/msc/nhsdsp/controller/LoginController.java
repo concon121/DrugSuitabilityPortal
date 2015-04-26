@@ -24,7 +24,7 @@ public class LoginController {
 	
 	@RequestMapping(value="loginError")
 	public String loginError(Model model) {
-		model.addAttribute("error", "There was a problem logging you in, please try again.");
+		model.addAttribute("error", "Your login credentials were incorrect or not present in our system.");
 		return "login";
 	}
 	

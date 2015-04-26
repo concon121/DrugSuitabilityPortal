@@ -72,19 +72,27 @@ public class DiagnosisController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchUsers(SearchForm form, Model model) {
 
-		try {
+		List<String> errorMessages = Validator.validate(form);
 
-			SearchHelper.searchPatientsOnly(getDao(), form, model);
+		if (errorMessages.isEmpty()) {
 
-		} catch (InstantiationException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (IllegalAccessException e) {
-			LOG.error("Exception occurred while searching.", e);
-			return "unknownError";
-		} catch (Exception e) {
-			LOG.error("Unknown exception occurred while searching.", e);
-			return "unknownError";
+			try {
+
+				SearchHelper.searchPatientsOnly(getDao(), form, model);
+
+			} catch (InstantiationException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (IllegalAccessException e) {
+				LOG.error("Exception occurred while searching.", e);
+				return "unknownError";
+			} catch (Exception e) {
+				LOG.error("Unknown exception occurred while searching.", e);
+				return "unknownError";
+			}
+
+		} else {
+			model.addAttribute("error", errorMessages);
 		}
 
 		return "diagnosis";
@@ -99,7 +107,8 @@ public class DiagnosisController {
 					ChosenPatientForm.class);
 			model.addAttribute("chosenUser", chosenPatient);
 			List<Illness> illnesses = getIllnessRepo().findAll();
-			List<String> illnessNames = Converter.convertIllnessToNames(illnesses);
+			List<String> illnessNames = Converter
+					.convertIllnessToNames(illnesses);
 			model.addAttribute("illnesses", illnessNames);
 
 		} catch (InvalidEntityConversionTypeException e) {
@@ -139,7 +148,7 @@ public class DiagnosisController {
 		List<Diagnosis> diagnosis = getDiagnosisRepo().findByUserId(userId);
 		List<DiagnosisForm> formItems = Converter.convert(diagnosis,
 				getIllnessRepo());
-		
+
 		List<String> errorMessages = Validator.validate(diagnosis, formItems);
 		if (errorMessages.isEmpty()) {
 			model.addAttribute("items", formItems);

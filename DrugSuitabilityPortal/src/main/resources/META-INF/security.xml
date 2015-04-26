@@ -37,8 +37,14 @@
 		<intercept-url pattern="/assessment/search" access="hasAnyRole('DOCTOR')"/>
 		<intercept-url pattern="/assessment/user" access="hasAnyRole('DOCTOR')"/>
 		<intercept-url pattern="/assessment/user/*" access="hasAnyRole('DOCTOR')"/>
-		<intercept-url pattern="/effect" access="hasAnyRole('DOCTOR', 'ADMIN')"/>
-		<intercept-url pattern="/effect/*" access="hasAnyRole('DOCTOR', 'ADMIN')"/>
+		<intercept-url pattern="/effect" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/effect/new" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/effect/view" access="hasAnyRole('DOCTOR', 'ADMIN')"/>
+		<intercept-url pattern="/drug/new" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/drug/new/*" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/drug/effect" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/drug/effect/*" access="hasAnyRole('ADMIN')"/>
+		<intercept-url pattern="/drug/view" access="hasAnyRole('DOCTOR', 'ADMIN')"/>
  
 		<!-- access denied page -->
 		<form-login 
