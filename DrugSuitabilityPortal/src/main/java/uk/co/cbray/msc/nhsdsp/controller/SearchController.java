@@ -23,6 +23,8 @@ import uk.co.cbray.msc.nhsdsp.forms.ViewDrugForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
 import uk.co.cbray.msc.nhsdsp.forms.ViewIllnessForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewUserForm;
+import uk.co.cbray.msc.nhsdsp.utils.ErrorMessageEnum;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.SearchHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
@@ -66,7 +68,7 @@ public class SearchController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String viewSearch() {
-		return "search";
+		return PageEnum.SEARCH.getName();
 	}
 
 	@RequestMapping(value = "/results", method = RequestMethod.POST)
@@ -95,20 +97,24 @@ public class SearchController {
 
 					SearchHelper.search(getDao(), form, model, Effect.class);
 
+				} else {
+					
+					model.addAttribute("error", ErrorMessageEnum.NO_RESULTS.getMessage());
+					
 				}
 
-				return "searchResults";
+				return PageEnum.SEARCH_RESULTS.getName();
 
 			} catch (InstantiationException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (IllegalAccessException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 		} else {
 			model.addAttribute("error", errorMessages);
-			return "searchResults";
+			return PageEnum.SEARCH_RESULTS.getName();
 		}
 
 	}
@@ -120,13 +126,13 @@ public class SearchController {
 			getDao().indexData();
 		} catch (InterruptedException ie) {
 			LOG.error("Failed to index data", ie);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error("Failed to index data", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 		model.addAttribute("success", "Successfully indexed the database.");
-		return "indexData";
+		return PageEnum.INDEX_DATA.getName();
 	}
 
 	public DataAccessObject getDao() {

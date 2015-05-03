@@ -13,10 +13,22 @@ import uk.co.cbray.msc.nhsdsp.entity.Effect;
 import uk.co.cbray.msc.nhsdsp.entity.Illness;
 import uk.co.cbray.msc.nhsdsp.entity.Incident;
 import uk.co.cbray.msc.nhsdsp.entity.PatientAllergy;
+import uk.co.cbray.msc.nhsdsp.entity.PatientDetail;
 import uk.co.cbray.msc.nhsdsp.entity.User;
+import uk.co.cbray.msc.nhsdsp.entity.UserLogin;
+import uk.co.cbray.msc.nhsdsp.forms.DiagnosisForm;
+import uk.co.cbray.msc.nhsdsp.forms.NewDrugForm;
+import uk.co.cbray.msc.nhsdsp.forms.NewEffectForm;
+import uk.co.cbray.msc.nhsdsp.forms.NewPasswordForm;
 import uk.co.cbray.msc.nhsdsp.forms.PatientDetailForm;
+import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
+import uk.co.cbray.msc.nhsdsp.forms.ViewDrugForm;
+import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
+import uk.co.cbray.msc.nhsdsp.forms.ViewIllnessForm;
+import uk.co.cbray.msc.nhsdsp.utils.EthnicityEnum;
+import uk.co.cbray.msc.nhsdsp.utils.RoleEnum;
 import uk.co.cbray.msc.nhsdsp.utils.SecurityContextHelper;
 
 public class TestFactory {
@@ -49,7 +61,7 @@ public class TestFactory {
 		PatientDetailForm form = new PatientDetailForm();
 
 		form.setDiabetes("Y");
-		form.setEthnicity("test");
+		form.setEthnicity(EthnicityEnum.CHINESE.getDescription());
 		form.setGender("MALE");
 		form.setHeight(new BigDecimal(150));
 		form.setWeight(new BigDecimal(100));
@@ -93,6 +105,7 @@ public class TestFactory {
 
 		i.setName("test illness");
 		i.setDescription("test description");
+		i.setId(new BigDecimal(1));
 
 		return i;
 	}
@@ -253,6 +266,183 @@ public class TestFactory {
 		d.setIncompatibility(new BigDecimal(20));
 		
 		return d;
+	}
+
+	public static NewDrugForm getNewDrugFormInstance() {
+		NewDrugForm form = new NewDrugForm();
+		
+		form.setAllergies("allergy one, allergy two, allergy three");
+		form.setDescription("a cool description");
+		form.setName("a cool name");
+		form.setEffects("effect 1, effect 2");
+		
+		return form;
+	}
+
+	public static List<PatientAllergy> getPatientAllergyListInstance(int size) {
+		
+		List<PatientAllergy> list = new ArrayList<PatientAllergy>();
+		
+		for (int i = 0; i < size; i++) {
+			list.add(getPatientAllergyInstance("a name"));
+		}
+		
+		return list;
+	}
+
+	public static PatientDetail getPatientDetailInstance() {
+		PatientDetail p = new PatientDetail();
+		
+		p.setDiabetes(1);
+		p.setEthnicity("an ethnicity");
+		p.setGender("female");
+		p.setHeight(new BigDecimal(150));
+		p.setId(new BigDecimal(1));
+		p.setSmoker(0);
+		p.setUser(getUserInstance());
+		p.setWeight(new BigDecimal(80));
+		
+		return p;
+	}
+
+	public static List<PatientDetail> getPatientDetailListInstance(int size) {
+
+		List<PatientDetail> list = new ArrayList<PatientDetail>();
+		
+		for (int i = 0; i < size; i++) {
+			list.add(getPatientDetailInstance());
+		}
+		
+		return list;
+		
+	}
+
+	public static UserForm getUserFormInstance() {
+		UserForm form = new UserForm();
+		
+		form.setDob("09-08-1992");
+		form.setEmailAddress("test.user@test.com");
+		form.setForename("test");
+		form.setSurname("user");
+		form.setPassword("aGroovyPassword");
+		form.setPasswordConfirmation("aGroovyPassword");
+		form.setRoleName(RoleEnum.ROLE_PATIENT.getName());
+		form.setUsername("testUser123");
+		
+		return form;
+	}
+
+	public static NewDrugForm getInvalidNewDrugFormInstance() {
+		NewDrugForm form = getNewDrugFormInstance();
+		form.setName("");
+		
+		return form;
+	}
+
+	public static ViewDrugForm getViewDrugFormInstance() {
+		ViewDrugForm form = new ViewDrugForm();
+		
+		form.setDrugId(new BigDecimal(1));
+		
+		return form;
+	}
+
+	public static SearchForm getSearchFormInstance(String entity) {
+		SearchForm form = new SearchForm();
+		
+		form.setEntity(entity);
+		form.setSearchString("a search string");
+		
+		return form;
+	}
+
+	public static DiagnosisForm getDiagnosisFormInstance() {
+		DiagnosisForm form = new DiagnosisForm();
+		
+		form.setIllnessName("a name");
+		form.setUserId(1);
+		
+		return form;
+	}
+
+	public static NewEffectForm getNewEffectFormInstance() {
+		NewEffectForm form = new NewEffectForm();
+		
+		form.setDescription("a description");
+		form.setName("a name");
+		
+		return form;
+	}
+
+	public static NewEffectForm getInvalidNewEffectFormInstance() {
+		NewEffectForm form = new NewEffectForm();
+		return form;
+	}
+
+	public static ViewEffect getViewEffectInstance() {
+		ViewEffect form = new ViewEffect();
+		
+		form.setEffectId(new BigDecimal(1));
+		
+		return form;
+	}
+
+	public static ViewEffect getInvalidViewEffectInstance() {
+		return new ViewEffect();
+	}
+
+	public static ViewIllnessForm getViewIllnessFormInstance() {
+		ViewIllnessForm form = new ViewIllnessForm();
+		
+		form.setIllnessId(new BigDecimal(1));
+		
+		return form;
+	}
+
+	public static NewPasswordForm getNewPasswordFormInstance() {
+		NewPasswordForm form = new NewPasswordForm();
+		
+		form.setPassword("aGroovyPassword");
+		form.setPasswordConfirmation("aGroovyPassword");
+		
+		return form;
+	}
+	
+	public static NewPasswordForm getNewPasswordFormInstanceNotMatching() {
+		NewPasswordForm form = new NewPasswordForm();
+		
+		form.setPassword("aGroovyPassword");
+		form.setPasswordConfirmation("invalidPassword");
+		
+		return form;
+	}
+	
+	public static NewPasswordForm getNewPasswordFormInstanceInvalid() {
+		NewPasswordForm form = new NewPasswordForm();
+		
+		return form;
+	}
+	
+	public static UserLogin getUserLoginInstance() {
+		UserLogin login = new UserLogin();
+		
+		login.setId(new BigDecimal(1));
+		login.setPassword("aPassword");
+		login.setUser(getUserInstance());
+		login.setUsername("aUsername");
+		
+		return login;
+	}
+
+	public static List<UserLogin> getUserLoginListInstance(int size) {
+		
+		List<UserLogin> list = new ArrayList<UserLogin>();
+		
+		for (int i = 0; i<size; i++) {
+			list.add(getUserLoginInstance());
+		}
+		
+		return list;
 	}
 	
 }

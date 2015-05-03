@@ -22,6 +22,7 @@ import uk.co.cbray.msc.nhsdsp.forms.UserDetailForm;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewUserForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.RoleEnum;
 import uk.co.cbray.msc.nhsdsp.utils.RoleHelper;
 import uk.co.cbray.msc.nhsdsp.utils.SecurityContextHelper;
@@ -76,7 +77,7 @@ public class UserController {
 
 		model.addAttribute("availableRoles", availableRoles);
 
-		return "newUserForm";
+		return PageEnum.NEW_USER_FORM.getName();
 	}
 
 	@RequestMapping(value = "/new/persist", method = RequestMethod.POST)
@@ -87,7 +88,7 @@ public class UserController {
 		if (errorMessages.size() > 0) {
 			model.addAttribute("error", errorMessages);
 			model.addAttribute("formContents", newUser);
-			return "newUserForm";
+			return PageEnum.NEW_USER_FORM.getName();
 		} else {
 
 			getUserRepo().createNewUser(newUser);
@@ -95,10 +96,10 @@ public class UserController {
 			if (SecurityContextHelper.isUserAnonymous()) {
 				model.addAttribute("success",
 						"Successfully added user.  Please log in to continue.");
-				return "login";
+				return PageEnum.LOGIN.getName();
 			} else {
 				model.addAttribute("success", "Successfully added user.");
-				return "home";
+				return PageEnum.HOME.getName();
 			}
 
 		}
@@ -109,17 +110,17 @@ public class UserController {
 
 		try {
 			populateModel(model, session);
-			return "updateUserDetails";
+			return PageEnum.UPDATE_USER_DETAILS.getName();
 		} catch (InvalidEntityConversionTypeException conversion) {
 			LOG.error(
 					"InvalidEntityConversionTypeException during conversion from User.class to UserDetailForm.class in UserDetailsController.updateUserDetails",
 					conversion);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error(
 					"Unknown Exception during conversion from User.class to UserDetailForm.class in UserDetailsController.updateUserDetails",
 					e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 	}
 
@@ -133,17 +134,17 @@ public class UserController {
 			try {
 				model.addAttribute("error", errorMessages);
 				populateModel(model, session);
-				return "updateUserDetails";
+				return PageEnum.UPDATE_USER_DETAILS.getName();
 			} catch (InvalidEntityConversionTypeException conversion) {
 				LOG.error(
 						"InvalidEntityConversionTypeException during conversion from User.class to UserDetailForm.class in UserDetailsController.updateUserDetails",
 						conversion);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (Exception e) {
 				LOG.error(
 						"Unknown Exception during conversion from User.class to UserDetailForm.class in UserDetailsController.updateUserDetails",
 						e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 		} else {
 
@@ -154,7 +155,7 @@ public class UserController {
 
 			model.addAttribute("success", "Successfully updated User Details.");
 
-			return "profile";
+			return PageEnum.PROFILE.getName();
 		}
 	}
 
@@ -166,13 +167,13 @@ public class UserController {
 			userDetails = Converter.convert(user, UserDetailForm.class);
 		} catch (InvalidEntityConversionTypeException e) {
 			LOG.error("Error while converting User to UserDetailsForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (InstantiationException e) {
 			LOG.error("Error while converting User to UserDetailsForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (IllegalAccessException e) {
 			LOG.error("Error while converting User to UserDetailsForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 		PatientDetailForm patientDetails = null;
 		if (user.getPatientDetails() != null
@@ -188,7 +189,7 @@ public class UserController {
 			model.addAttribute("patient", patientDetails);
 		}
 
-		return "viewUser";
+		return PageEnum.VIEW_USER.getName();
 	}
 
 	public UserRepository getUserRepo() {

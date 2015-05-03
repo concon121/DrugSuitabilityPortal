@@ -17,6 +17,7 @@ import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.entity.UserLogin;
 import uk.co.cbray.msc.nhsdsp.forms.NewPasswordForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
 @Controller
@@ -36,7 +37,7 @@ public class LoginCredentialsController {
 	@RequestMapping(value="/update")
 	public String updatePassword() {
 		
-		return "updatePassword";
+		return PageEnum.UPDATE_PASSWORD.getName();
 		
 	}
 	
@@ -45,7 +46,7 @@ public class LoginCredentialsController {
 		List<String> errorMessages = Validator.validate(form);
 		if (errorMessages.size() > 0) {
 			model.addAttribute("error", errorMessages);
-			return "updatePassword";
+			return PageEnum.UPDATE_PASSWORD.getName();
 		} else {
 			BigDecimal userId = new BigDecimal((Integer)session.getAttribute("userId"));
 			User user = (User) getUserRepo().findById(userId);
@@ -57,7 +58,7 @@ public class LoginCredentialsController {
 			}
 			
 			model.addAttribute("success", "Successfully updated Password.");
-			return "profile";
+			return PageEnum.PROFILE.getName();
 		}
 		
 	}	

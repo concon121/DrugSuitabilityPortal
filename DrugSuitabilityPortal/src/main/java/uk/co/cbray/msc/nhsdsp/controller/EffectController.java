@@ -14,6 +14,7 @@ import uk.co.cbray.msc.nhsdsp.entity.Effect;
 import uk.co.cbray.msc.nhsdsp.forms.NewEffectForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
 @Controller
@@ -30,7 +31,7 @@ public class EffectController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String newEffect() {
-		return "newEffect";
+		return PageEnum.NEW_EFFECT.getName();
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
@@ -39,13 +40,13 @@ public class EffectController {
 		List<String> errorMessages = Validator.validate(form);
 		if (!errorMessages.isEmpty()) {
 			model.addAttribute("error", errorMessages);
-			return "newEffect";
+			return PageEnum.NEW_EFFECT.getName();
 		} else {
 			Effect effect = Converter.convert(form);
 			getEffectRepo().create(effect);
 			model.addAttribute("success",
 					"Successfully registered a new side effect!");
-			return "home";
+			return PageEnum.HOME.getName();
 		}
 	}
 
@@ -61,7 +62,7 @@ public class EffectController {
 		} else {
 			model.addAttribute("effect", effect);
 		}
-		return "viewEffect";
+		return PageEnum.VIEW_EFFECT.getName();
 	}
 
 	public EffectRepository getEffectRepo() {

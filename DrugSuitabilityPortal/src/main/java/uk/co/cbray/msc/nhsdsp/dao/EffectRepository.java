@@ -40,13 +40,9 @@ public class EffectRepository {
 	}
 
 	public Effect findById(BigDecimal effectId) {
-		String jpql = "from Effect e where e.id = ?";
-		List<Effect> results = getDao().executeJpqlQueryWithParameters(jpql, Effect.class, effectId);
-		if (results.isEmpty()) {
-			return null;
-		} else {
-			return results.get(0);
-		}
+		@SuppressWarnings("unchecked")
+		Effect result = getDao().find(effectId, Effect.class);
+		return result;
 	}
 	
 	

@@ -33,6 +33,7 @@ import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewUserForm;
 import uk.co.cbray.msc.nhsdsp.utils.AssessmentHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.SearchHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
@@ -79,7 +80,7 @@ public class AssessmentController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String newAssessment(Model model) {
-		return "assessment";
+		return PageEnum.ASSESSMENT.getName();
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -95,19 +96,19 @@ public class AssessmentController {
 
 			} catch (InstantiationException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (IllegalAccessException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (Exception e) {
 				LOG.error("Unknown exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 		} else {
 			model.addAttribute("error", errorMessages);
 		}
 
-		return "assessment";
+		return PageEnum.ASSESSMENT.getName();
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -130,19 +131,19 @@ public class AssessmentController {
 
 		} catch (InvalidEntityConversionTypeException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (InstantiationException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (IllegalAccessException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error("Unknown error occurred.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 
-		return "assessment";
+		return PageEnum.ASSESSMENT.getName();
 	}
 
 	@RequestMapping(value = "/user/illness", method = RequestMethod.POST)
@@ -162,27 +163,27 @@ public class AssessmentController {
 
 				model.addAttribute("items", formItems);
 				model.addAttribute("success", "Successfully Assessed patient!");
-				return "viewPastAssessments";
+				return PageEnum.VIEW_ASSESSMENTS.getName();
 
 			} catch (InstantiationException e) {
 				LOG.error(
 						"Exception caught while converting to AssessmentForm",
 						e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (IllegalAccessException e) {
 				LOG.error(
 						"Exception caught while converting to AssessmentForm",
 						e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (InvalidEntityConversionTypeException e) {
 				LOG.error(
 						"Exception caught while converting to AssessmentForm",
 						e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 		} else {
 			model.addAttribute("error", errorMessages);
-			return "assessment";
+			return PageEnum.ASSESSMENT.getName();
 		}
 
 	}
@@ -207,27 +208,27 @@ public class AssessmentController {
 			} else {
 				model.addAttribute("error", errorMessages);
 			}
-			return "viewPastAssessments";
+			return PageEnum.VIEW_ASSESSMENTS.getName();
 		} catch (InstantiationException instantiation) {
 			LOG.error(
 					"InstantiationException during conversion from DrugUserSuitability.class to AssessmentForm.class in AssessmentController.viewAssessments",
 					instantiation);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (IllegalAccessException access) {
 			LOG.error(
 					"IllegalAccessException during conversion from DrugUserSuitability.class to AssessmentForm.class in AssessmentController.viewAssessments",
 					access);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (InvalidEntityConversionTypeException conversion) {
 			LOG.error(
 					"InvalidEntityConversionTypeException during conversion from DrugUserSuitability.class to AssessmentForm.class in AssessmentController.viewAssessments",
 					conversion);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error(
 					"Unknown Exception during conversion from DrugUserSuitability.class to AssessmentForm.class in AssessmentController.viewAssessments",
 					e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 	}
 

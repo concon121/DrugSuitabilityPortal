@@ -2,6 +2,7 @@ package uk.co.cbray.msc.nhsdsp.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -82,6 +83,9 @@ public class Drug implements Serializable, IEntity, Searchable {
 	}
 
 	public List<DrugAllergy> getDrugAllergies() {
+		if (this.drugAllergies == null) {
+			this.drugAllergies = new ArrayList<DrugAllergy>();
+		}
 		return this.drugAllergies;
 	}
 

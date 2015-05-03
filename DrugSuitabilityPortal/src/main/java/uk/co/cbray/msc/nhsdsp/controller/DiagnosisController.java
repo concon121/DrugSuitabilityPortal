@@ -27,6 +27,7 @@ import uk.co.cbray.msc.nhsdsp.forms.DiagnosisForm;
 import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewUserForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.SearchHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
@@ -66,7 +67,7 @@ public class DiagnosisController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String newDiagnosis(Model model) {
-		return "diagnosis";
+		return PageEnum.DIAGNOSIS.getName();
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -82,20 +83,20 @@ public class DiagnosisController {
 
 			} catch (InstantiationException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (IllegalAccessException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (Exception e) {
 				LOG.error("Unknown exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 
 		} else {
 			model.addAttribute("error", errorMessages);
 		}
 
-		return "diagnosis";
+		return PageEnum.DIAGNOSIS.getName();
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -113,19 +114,19 @@ public class DiagnosisController {
 
 		} catch (InvalidEntityConversionTypeException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (InstantiationException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (IllegalAccessException e) {
 			LOG.error("Error while converting User to ChosenPatientForm.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error("Unknown error occurred.", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 
-		return "diagnosis";
+		return PageEnum.DIAGNOSIS.getName();
 	}
 
 	@RequestMapping(value = "/user/illness", method = RequestMethod.POST)
@@ -136,7 +137,7 @@ public class DiagnosisController {
 
 		model.addAttribute("success", "Successfully diagnosed patient!");
 
-		return "home";
+		return PageEnum.HOME.getName();
 	}
 
 	@RequestMapping(value = "/view")
@@ -156,7 +157,7 @@ public class DiagnosisController {
 			model.addAttribute("error", errorMessages);
 		}
 
-		return "viewPastDiagnosis";
+		return PageEnum.VIEW_DIAGNOSIS.getName();
 	}
 
 	public IllnessRepository getIllnessRepo() {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import uk.co.cbray.msc.nhsdsp.dao.DataAccessObject;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 
 @Controller
 public class ProfileController {
@@ -15,12 +16,12 @@ public class ProfileController {
 	
 	@RequestMapping(value="/profile")
 	public String profile() {
-		return "profile";
+		return PageEnum.PROFILE.getName();
 	}
 	
 	@RequestMapping(value="/profile/accountSettings")
 	public String accountSettings() {
-		return "accountSettings";
+		return PageEnum.ACCOUNT_SETTINGS.getName();
 	}
 	
 	public DataAccessObject getDao() {

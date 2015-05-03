@@ -24,6 +24,7 @@ import uk.co.cbray.msc.nhsdsp.forms.SearchForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewDrugForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewEffect;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.SearchHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
@@ -48,7 +49,7 @@ public class DrugController {
 
 	@RequestMapping(value = "/new")
 	public String newDrug() {
-		return "newDrug";
+		return PageEnum.NEW_DRUG.getName();
 	}
 
 	@ModelAttribute("searchForm")
@@ -70,28 +71,28 @@ public class DrugController {
 		if (errorMessages.size() > 0) {
 			model.addAttribute("error", errorMessages);
 			model.addAttribute("formContents", form);
-			return "newDrug";
+			return PageEnum.NEW_DRUG.getName();
 		} else {
 
 			getDrugRepo().createNewDrug(form);
 			model.addAttribute("success", "Successfully added a new drug.");
 
-			return "home";
+			return PageEnum.HOME.getName();
 		}
 	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.POST)
-	public String viewUser(ViewDrugForm form, Model model, HttpSession session) {
+	public String viewDrug(ViewDrugForm form, Model model, HttpSession session) {
 		Drug drug = getDrugRepo().findById(form.getDrugId());
 		DrugForm drugForm = Converter.convert(drug);
 
 		model.addAttribute("drug", drugForm);
 
-		return "viewDrug";
+		return PageEnum.VIEW_DRUG.getName();
 	}
 
 	@RequestMapping(value = "/effect/search", method = RequestMethod.POST)
-	public String searchUsers(SearchForm form, Model model) {
+	public String searchEffects(SearchForm form, Model model) {
 
 		List<String> errorMessages = Validator.validate(form);
 
@@ -103,19 +104,19 @@ public class DrugController {
 
 			} catch (InstantiationException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (IllegalAccessException e) {
 				LOG.error("Exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			} catch (Exception e) {
 				LOG.error("Unknown exception occurred while searching.", e);
-				return "unknownError";
+				return PageEnum.UNKNOWN_ERROR.getName();
 			}
 		} else {
 			model.addAttribute("error", errorMessages);
 		}
 
-		return "newDrug";
+		return PageEnum.NEW_DRUG.getName();
 	}
 
 	public DrugRepository getDrugRepo() {

@@ -111,9 +111,7 @@ public class Validator {
 		if (form.getPassword() == null
 				|| form.getPasswordConfirmation() == null) {
 			errorMessages.add(ErrorMessageEnum.INCOMPLETE_FORM.getMessage());
-		}
-
-		if (!form.getPassword().equals(form.getPasswordConfirmation())) {
+		} else if (!form.getPassword().equals(form.getPasswordConfirmation())) {
 			errorMessages.add(ErrorMessageEnum.PASSWORDS_DO_NOT_MATCH
 					.getMessage());
 		}

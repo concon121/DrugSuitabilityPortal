@@ -11,6 +11,7 @@ import uk.co.cbray.msc.nhsdsp.entity.Illness;
 import uk.co.cbray.msc.nhsdsp.forms.IllnessForm;
 import uk.co.cbray.msc.nhsdsp.forms.ViewIllnessForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 
 @Controller
 @RequestMapping("/illness")
@@ -27,7 +28,7 @@ public class IllnessController {
 		
 		model.addAttribute("illness", illnessForm);
 		
-		return "viewIllness";
+		return PageEnum.VIEW_ILLNESS.getName();
 	}
 
 	public DataAccessObject getDao() {

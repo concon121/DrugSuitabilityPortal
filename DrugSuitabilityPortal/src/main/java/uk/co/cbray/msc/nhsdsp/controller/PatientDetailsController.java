@@ -19,10 +19,10 @@ import uk.co.cbray.msc.nhsdsp.entity.PatientAllergy;
 import uk.co.cbray.msc.nhsdsp.entity.PatientDetail;
 import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.forms.PatientDetailForm;
-import uk.co.cbray.msc.nhsdsp.utils.AllergyHelper;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
 import uk.co.cbray.msc.nhsdsp.utils.EthnicityEnum;
 import uk.co.cbray.msc.nhsdsp.utils.GenderEnum;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
 @Controller
@@ -62,7 +62,7 @@ public class PatientDetailsController {
 			model.addAttribute("formContents", form);
 		}
 		
-		return "updatePatientDetails";
+		return PageEnum.UPDATE_PATIENT_DETAILS.getName();
 	}
 	
 	@RequestMapping(value="/update/persist", method=RequestMethod.POST)
@@ -77,7 +77,7 @@ public class PatientDetailsController {
 			model.addAttribute("availableEthnicities", availableEthnicities);
 			List<String> availableGenders = GenderEnum.getAvailableGenders();
 			model.addAttribute("availableGenders", availableGenders);
-			return "updatePatientDetails";
+			return PageEnum.UPDATE_PATIENT_DETAILS.getName();
 		} else {
 			// Check if a patientDetail already exists for user
 			BigDecimal userId = new BigDecimal((Integer)session.getAttribute("userId"));
@@ -87,7 +87,7 @@ public class PatientDetailsController {
 			getPatientDetailsRepo().updateAllPatientDetails(user, detail);
 			
 			model.addAttribute("success", "Successfully updated Patient Details.");
-			return "profile";
+			return PageEnum.PROFILE.getName();
 		}
 		
 	}

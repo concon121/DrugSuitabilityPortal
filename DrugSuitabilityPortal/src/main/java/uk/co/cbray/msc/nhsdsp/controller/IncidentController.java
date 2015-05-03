@@ -26,6 +26,7 @@ import uk.co.cbray.msc.nhsdsp.exceptions.InvalidEntityConversionTypeException;
 import uk.co.cbray.msc.nhsdsp.exceptions.InvalidParameterException;
 import uk.co.cbray.msc.nhsdsp.forms.IncidentForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
+import uk.co.cbray.msc.nhsdsp.utils.PageEnum;
 import uk.co.cbray.msc.nhsdsp.utils.Validator;
 
 @Controller
@@ -83,7 +84,7 @@ public class IncidentController {
 	@RequestMapping(value = "/new")
 	public String newIncident(Model model, HttpSession session) {
 		populateModel(model, session);
-		return "newIncident";
+		return PageEnum.NEW_INCIDENT.getName();
 	}
 
 	@RequestMapping(value = "/new/persist")
@@ -95,18 +96,18 @@ public class IncidentController {
 			populateModel(model, session);
 			model.addAttribute("formContent", form);
 			model.addAttribute("error", errorMessages);
-			return "newIncident";
+			return PageEnum.NEW_INCIDENT.getName();
 		} else {
 			try {
 				Incident incident = Converter.convert(form, getDao(), session);
 				getDao().create(incident);
 				model.addAttribute("success", "Successfully recorded incident.");
-				return "home";
+				return PageEnum.HOME.getName();
 			} catch (InvalidParameterException ex) {
 				model.addAttribute("error", ex.getMessage());
 				model.addAttribute("formContent", form);
 				populateModel(model, session);
-				return "newIncident";
+				return PageEnum.NEW_INCIDENT.getName();
 			}
 		}
 
@@ -127,22 +128,20 @@ public class IncidentController {
 			} else {
 				model.addAttribute("error", errorMessages);
 			}
-			
-			
-			
-			return "viewIncidents";
+			return PageEnum.VIEW_INCIDENTS.getName();
+
 		} catch (InstantiationException instantiation) {
 			LOG.error("InstantiationException during conversion from Incident.class to IncidentForm.class in IncidentController.viewIncidents", instantiation);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (IllegalAccessException access) {
 			LOG.error("IllegalAccessException during conversion from Incident.class to IncidentForm.class in IncidentController.viewIncidents", access);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (InvalidEntityConversionTypeException conversion) {
 			LOG.error("InvalidEntityConversionTypeException during conversion from Incident.class to IncidentForm.class in IncidentController.viewIncidents", conversion);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		} catch (Exception e) {
 			LOG.error("Unknown Exception during conversion from Incident.class to IncidentForm.class in IncidentController.viewIncidents", e);
-			return "unknownError";
+			return PageEnum.UNKNOWN_ERROR.getName();
 		}
 	}
 
