@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Diagnosis;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
 
 /**
  * An implementation of the Facade design pattern, this class encapsulates
@@ -13,17 +14,25 @@ import uk.co.cbray.msc.nhsdsp.entity.Diagnosis;
  * 
  * @author Connor Bray
  */
-public class DiagnosisRepository {
+public class DiagnosisRepository implements ICrudRepository {
 
 	@Autowired
 	private DataAccessObject dao;
 
-	public void create(Diagnosis entity) {
+	public void create(IEntity entity) {
 		getDao().create(entity);
 	}
 
-	public void update(Diagnosis entity) {
-		getDao().update(entity, Diagnosis.class);
+	public IEntity read(Object id) {
+		return getDao().find(id, Diagnosis.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((Diagnosis) entity, Diagnosis.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((Diagnosis) entity, Diagnosis.class);
 	}
 
 	public List<Diagnosis> findByUserId(BigDecimal userId) {

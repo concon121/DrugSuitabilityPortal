@@ -6,23 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Drug;
 import uk.co.cbray.msc.nhsdsp.entity.Incident;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
+import uk.co.cbray.msc.nhsdsp.entity.Incident;
 /**
  * An implementation of the Facade design pattern, this class encapsulates
  * persistence logic for Incidents and provides a simple and readable api.
  * 
  * @author Connor Bray
  */
-public class IncidentRepository {
+public class IncidentRepository implements ICrudRepository{
 
 	@Autowired
 	private DataAccessObject dao;
 	
-	public void create(Incident entity) {
+	public void create(IEntity entity) {
 		getDao().create(entity);
 	}
-	
-	public void update(Incident entity) {
-		getDao().update(entity, Incident.class);
+
+	public IEntity read(Object id) {
+		return getDao().find(id, Incident.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((Incident) entity, Incident.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((Incident) entity, Incident.class);
 	}
 
 	public DataAccessObject getDao() {

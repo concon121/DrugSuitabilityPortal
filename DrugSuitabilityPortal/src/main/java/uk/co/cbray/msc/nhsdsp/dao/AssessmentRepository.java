@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.cbray.msc.nhsdsp.entity.DrugUserSuitability;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
 
 /**
  * An implementation of the Facade design pattern, this class encapsulates
@@ -19,27 +20,35 @@ import uk.co.cbray.msc.nhsdsp.entity.DrugUserSuitability;
  * 
  * @author Connor Bray
  */
-public class AssessmentRepository {
+public class AssessmentRepository implements ICrudRepository{
 	@Autowired
 	private DataAccessObject dao;
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(AssessmentRepository.class);
 
+	public void create(IEntity entity) {
+		getDao().create(entity);
+	}
+
+	public IEntity read(Object id) {
+		return getDao().find(id, DrugUserSuitability.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((DrugUserSuitability) entity, DrugUserSuitability.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((DrugUserSuitability) entity, DrugUserSuitability.class);
+	}
+	
 	public List<DrugUserSuitability> findByUserId(BigDecimal userId) {
 		String jpql = "from DrugUserSuitability s where s.user.id = ?";
 		List<DrugUserSuitability> assessments = getDao()
 				.executeJpqlQueryWithParameters(jpql,
 						DrugUserSuitability.class, userId);
 		return assessments;
-	}
-
-	public DataAccessObject getDao() {
-		return dao;
-	}
-
-	public void setDao(DataAccessObject dao) {
-		this.dao = dao;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -49,6 +58,14 @@ public class AssessmentRepository {
 		suitsSet.addAll(suits);
 		getDao().createAll(suitsSet);
 		LOG.debug("Create all DrugUserSuitabilities ended.");
+	}
+	
+	public DataAccessObject getDao() {
+		return dao;
+	}
+
+	public void setDao(DataAccessObject dao) {
+		this.dao = dao;
 	}
 
 }

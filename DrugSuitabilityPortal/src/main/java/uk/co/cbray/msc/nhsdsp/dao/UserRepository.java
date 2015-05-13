@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.cbray.msc.nhsdsp.entity.User;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
+import uk.co.cbray.msc.nhsdsp.entity.User;
 import uk.co.cbray.msc.nhsdsp.entity.UserLogin;
 import uk.co.cbray.msc.nhsdsp.forms.UserForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
@@ -17,10 +19,26 @@ import uk.co.cbray.msc.nhsdsp.utils.Converter;
  * 
  * @author Connor Bray
  */
-public class UserRepository {
+public class UserRepository implements ICrudRepository {
 	
 	@Autowired
 	private DataAccessObject dao;
+	
+	public void create(IEntity entity) {
+		getDao().create(entity);
+	}
+
+	public IEntity read(Object id) {
+		return getDao().find(id, User.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((User) entity, User.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((User) entity, User.class);
+	}
 	
 	public User findById(BigDecimal id) {
 		User user = getDao().find(id, User.class);
@@ -46,14 +64,6 @@ public class UserRepository {
 		String jpql = "from UserLogin l where l.user = ?";
 		List<UserLogin> results = getDao().executeJpqlQueryWithParameters(jpql, UserLogin.class, user);
 		return results;
-	}
-	
-	public void create(User user) {
-		getDao().create(user);
-	}
-	
-	public void update(User user) {
-		getDao().update(user, User.class);
 	}
 
 	public DataAccessObject getDao() {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
 import uk.co.cbray.msc.nhsdsp.entity.PatientAllergy;
 import uk.co.cbray.msc.nhsdsp.entity.PatientDetail;
 import uk.co.cbray.msc.nhsdsp.entity.User;
@@ -17,17 +18,25 @@ import uk.co.cbray.msc.nhsdsp.utils.AllergyHelper;
  * 
  * @author Connor Bray
  */
-public class PatientDetailsRepository {
+public class PatientDetailsRepository implements ICrudRepository{
 
 	@Autowired
 	private DataAccessObject dao;
 	
-	public void create(PatientDetail entity) {
+	public void create(IEntity entity) {
 		getDao().create(entity);
 	}
-	
-	public void update(PatientDetail entity) {
-		getDao().update(entity, PatientDetail.class);
+
+	public IEntity read(Object id) {
+		return getDao().find(id, PatientDetail.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((PatientDetail) entity, PatientDetail.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((PatientDetail) entity, PatientDetail.class);
 	}
 	
 	public List<PatientDetail> findPatientDetailsForUser(User user) {

@@ -27,7 +27,7 @@ import uk.co.cbray.msc.nhsdsp.entity.Searchable;
  * 
  * @author Connor Bray
  */
-public class DataAccessObject {
+public class DataAccessObject implements ICrudDataAccessObject{
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DataAccessObject.class);

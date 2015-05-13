@@ -15,6 +15,8 @@ import uk.co.cbray.msc.nhsdsp.entity.Drug;
 import uk.co.cbray.msc.nhsdsp.entity.DrugAllergy;
 import uk.co.cbray.msc.nhsdsp.entity.DrugEffect;
 import uk.co.cbray.msc.nhsdsp.entity.DrugIllness;
+import uk.co.cbray.msc.nhsdsp.entity.Drug;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
 import uk.co.cbray.msc.nhsdsp.entity.Illness;
 import uk.co.cbray.msc.nhsdsp.forms.NewDrugForm;
 import uk.co.cbray.msc.nhsdsp.utils.Converter;
@@ -25,7 +27,7 @@ import uk.co.cbray.msc.nhsdsp.utils.Converter;
  * 
  * @author Connor Bray
  */
-public class DrugRepository {
+public class DrugRepository implements ICrudRepository {
 
 	@Autowired
 	private DataAccessObject dao;
@@ -34,12 +36,20 @@ public class DrugRepository {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(DrugRepository.class);
 
-	public void update(Drug entity) {
-		getDao().update(entity, Drug.class);
+	public void create(IEntity entity) {
+		getDao().create(entity);
 	}
 
-	public void create(Drug entity) {
-		getDao().create(entity);
+	public IEntity read(Object id) {
+		return getDao().find(id, Drug.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((Drug) entity, Drug.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((Drug) entity, Drug.class);
 	}
 
 	public Drug findById(BigDecimal id) {

@@ -7,23 +7,33 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.cbray.msc.nhsdsp.entity.Illness;
+import uk.co.cbray.msc.nhsdsp.entity.IEntity;
+import uk.co.cbray.msc.nhsdsp.entity.Illness;
 /**
  * An implementation of the Facade design pattern, this class encapsulates
  * persistence logic for Illnesses and provides a simple and readable api.
  * 
  * @author Connor Bray
  */
-public class IllnessRepository {
+public class IllnessRepository implements ICrudRepository {
 
 	@Autowired
 	private DataAccessObject dao;
 
-	public void create(Illness entity) {
+	public void create(IEntity entity) {
 		getDao().create(entity);
 	}
 
-	public void update(Illness entity) {
-		getDao().update(entity, Illness.class);
+	public IEntity read(Object id) {
+		return getDao().find(id, Illness.class);
+	}
+
+	public void update(IEntity entity) {
+		getDao().update((Illness) entity, Illness.class);
+	}
+
+	public void delete(IEntity entity) {
+		getDao().delete((Illness) entity, Illness.class);
 	}
 
 	public List<Illness> findAll() {
