@@ -1,2 +1,8 @@
 # DrugSuitabilityPortal
-MSc Applied Computer Science - Project 1
+- Spring web MVC
+- Spring Security
+- JPA
+- Hibernate Search
+- JSP
+- JSTL
+- Apache Tiles
